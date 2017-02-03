@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Button, Card, Row, Col } from 'react-materialize';
 
 const App = React.createClass({
 	getInitialState: function() {
