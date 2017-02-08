@@ -12,7 +12,7 @@ const App = React.createClass({
 	render: function() {
 		return (
 			<div>
-				<div>
+				<div className="topBar">
 					<header>
 						<h1>Tracker</h1>
 						<h2>Keep track of your life!</h2>
