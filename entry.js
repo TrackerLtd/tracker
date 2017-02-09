@@ -8,6 +8,12 @@ import Login from './components/login';
 import ManageDatasets from './components/manage_datasets';
 import TrackData from './components/track_data';
 
+require('./styles/style.css');
+// require('./styles/materialize.min.css');
+require('file?name=[name].[ext]!./index.html');
+require('file?name=[name].[ext]!./styles/materialize.min.css');
+require('file?name=[name].[ext]!./styles/style.css');
+
 ReactDOM.render(<Router history={ browserHistory }>
 					<Route path="/" component={ App }>
 						<IndexRoute component={ Login } />
