@@ -76,3 +76,8 @@ i.e.
   button.submit:hover {
     background: #FF4081;
   }
+
+  /* HOMEPAGE */
+  .tablist {
+    background: #0097A7;
+  }

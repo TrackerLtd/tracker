@@ -17,10 +17,6 @@ const App = React.createClass({
 						<h1>Tracker</h1>
 						<h2>Keep track of your life!</h2>
 					</header>
-					<ul className="tablist" role="tablist">
-						<li role="tab">Login</li>
-						<li role="tab">Sign-up</li>
-					</ul>
 				</div>
 				<div>
 					{ this.props.children }
