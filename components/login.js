@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button, Card, Row, Col, Input, Navbar, NavItem } from 'react-materialize';
+import firebase from 'firebase';
 
 var Login = React.createClass({
 	render: function() {
