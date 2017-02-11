@@ -81,3 +81,7 @@ i.e.
   .tablist {
     background: #0097A7;
   }
+
+  h2 {
+    text-transform: capitalize;
+  }
