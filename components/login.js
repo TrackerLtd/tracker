@@ -1,84 +1,84 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Button, Card, Row, Col, Input, Navbar, NavItem } from 'react-materialize';
-import firebase from 'firebase';
+    import React from 'react';
+    import ReactDOM from 'react-dom';
+    import { Button, Card, Row, Col, Input, Navbar, NavItem } from 'react-materialize';
+    import firebase from 'firebase';
 
-import Alert from './alert';
+    import Alert from './alert';
 
-class Login extends React.Component {
-	constructor() {
-		super();
+    class Login extends React.Component {
+    	constructor(props) {
+    		super(props);
 
-		this.state = {
-			userName: '',
-			password: '',
-			email: '',
-			mode: 'signup',
-			error: null
-		}
+    		this.state = {
+    			userName: '',
+    			password: '',
+    			email: '',
+    			mode: 'signup',
+    			error: null
+    		}
 
-		this.signup = this.signup.bind(this);
-		this.login.bind(this);
-		
-	}
+    		this.signup = this.signup.bind(this);
+    		this.login = this.login.bind(this);
+    		
+    	}
 
-	render() {
-		return (
-			<div>
-				<div className="topBar">
-					<header>
-						<h1>Tracker</h1>
-						<h2>Keep track of your life!</h2>
-					</header>
-				</div>
-				<Row className="light-primary-color">
-					<Col s={8} offset="s2" className="primary-text-color">
-						<Navbar className="tablist" role="tablist">
-							<NavItem role="tab" className={ this.state.mode === 'login' ? "active" : ""}>Login</NavItem>
-							<NavItem role="tab" className={ this.state.mode === 'signup' ? "active" : ""}>Sign-up</NavItem>
-						</Navbar>
-						<Card className="panel white" role="tabpanel">
-							<h2>{ this.state.mode }</h2>
-							{ this.state.error ? <Alert type='error'>{ this.state.error }</Alert> : null }
-							<form action="">
-								<Row>
-									{ this.state.mode === 'signup' 
-											? <Input type="text" s={12} label="Username" 
-											onChange={ (evt) => this.setState({ userName: evt.target.value }) } /> 
-											: ''
-									}
-									
-									<Input 	s={6} type="email" label="Email" 
-											onChange={ (evt) => this.setState({ email: evt.target.value }) } />
-									<Input 	s={6} type="password" label="Password" 
-											onChange={ (evt) => this.setState({ password: evt.target.value }) }  />
-									<Button className="submit dark-primary-color"
-											onClick={ this.state.mode ==='login' ? (e) => this.login(e) : (e) => this.signup(e) }>Submit</Button>
-								</Row>
-							</form>
-						</Card>
-					</Col>
-				</Row>
-			</div>
-		)
-	}
+    	render() {
+    		return (
+    			<div>
+    				<div className="topBar">
+    					<header>
+    						<h1>Tracker</h1>
+    						<h2>Keep track of your life!</h2>
+    					</header>
+    				</div>
+    				<Row className="light-primary-color">
+    					<Col s={8} offset="s2" className="primary-text-color">
+    						<Navbar className="tablist" role="tablist">
+    							<NavItem role="tab" className={ this.state.mode === 'login' ? "active" : ""}>Login</NavItem>
+    							<NavItem role="tab" className={ this.state.mode === 'signup' ? "active" : ""}>Sign-up</NavItem>
+    						</Navbar>
+    						<Card className="panel white" role="tabpanel">
+    							<h2>{ this.state.mode }</h2>
+    							{ this.state.error ? <Alert type='error'>{ this.state.error }</Alert> : null }
+    							<form action="">
+    								<Row>
+    									{ this.state.mode === 'signup' 
+    											? <Input type="text" s={12} label="Username" 
+    											onChange={ (evt) => this.setState({ userName: evt.target.value }) } /> 
+    											: ''
+    									}
+    									
+    									<Input 	s={6} type="email" label="Email" 
+    											onChange={ (evt) => this.setState({ email: evt.target.value }) } />
+    									<Input 	s={6} type="password" label="Password" 
+    											onChange={ (evt) => this.setState({ password: evt.target.value }) }  />
+    									<Button className="submit dark-primary-color"
+    											onClick={ this.state.mode ==='login' ? (e) => { this.login(e) } : (e) => this.signup(e) }>Submit</Button>
+    								</Row>
+    							</form>
+    						</Card>
+    					</Col>
+    				</Row>
+    			</div>
+    		)
+    	}
 
-	signup(e) {
-		e.preventDefault();
-		firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-		.then(user => {
-			return user.updateProfile({ displayName: this.state.userName })
-		})
-		.then(() => this.props.onLogin(this.state.userName))
-		.catch(error => this.setState({ error: error.message }));
-	}
+    	signup(e) {
+    		e.preventDefault();
+    		firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+    		.then(user => {
+    			return user.updateProfile({ displayName: this.state.userName })
+    		})
+    		.then((user) => { this.props.onLogin(this.state.userName)})
+    		.catch(error => this.setState({ error: error.message }));
+    	}
 
-	login(e) {
-		e.preventDefault();
-		firebase.auth().signInWithEmailAndPassword(this.state.userName, this.state.password)
-		.then((user) => this.props.onLogin(user.displayName))
-		.catch((err) => this.setState({ error: err.message }));
-	}
-}
+    	login(e) {
+    		e.preventDefault();
+    		firebase.auth().signInWithEmailAndPassword(this.state.userName, this.state.password)
+    		.then((user) => this.props.onLogin(user.displayName))
+    		.catch((err) => this.setState({ error: err.message }));
+    	}
+    }
 
-export default Login;
+    export default Login;

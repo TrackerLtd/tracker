@@ -22,7 +22,7 @@ import firebase from 'firebase';
   firebase.initializeApp(config);
 
 ReactDOM.render(<Router history={ browserHistory }>
-					<Route path="/" component={ Login } />
+					<Route path="/" component={ App } />
 					<Route path="/managedata" component={ ManageDatasets } />
 					<Route path="/track" component={ TrackData } />
 				</Router>, document.getElementById("placeholder"));

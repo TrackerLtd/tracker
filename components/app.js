@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button, Card, Row, Col } from 'react-materialize';
+import firebase from 'firebase';
 
 import Login from './login';
+import TrackData from './track_data';
 
 class App extends React.Component {
 	constructor() {
@@ -11,29 +13,30 @@ class App extends React.Component {
 			currentUser: null,
 			loggedIn: false
 		}
+
+		this.login = this.login.bind(this);
 	}
 
 	render() {
-		if (!this.state.loggedIn) {
-			return <Login onLogin={ (userName) => this.login(userName) }/>
+		if(!this.state.loggedIn) {
+			return <Login onLogin={ (userName) => this.login(userName) } />
 		} else {
 			return <TrackData currentUser={ this.state.currentUser } />
 		}
 	}
 
 	login(userName) {
-	  this.setState({ currentUser: userName });
-	  console.log(this.state.currentUser);
+	  this.setState({ loggedIn: true, currentUser: userName });
 	}
 
 	componentDidMount() {
 	  firebase.auth().onAuthStateChanged((user) => {
-	    if (user) {
-	      this.setState({loggedIn: true, currentUser: user.displayName })
-	    } else {
-	      this.setState({loggedIn: false })
-	    }
-	  })
+      	if(user) {
+        this.login(user.displayName);
+      } else {
+        this.setState({ loggedIn: false })
+      }
+    });
 	}
 
 }	
