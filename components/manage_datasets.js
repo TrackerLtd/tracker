@@ -1,10 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-var ManageDatasets = React.createClass({
-	render: function() {
+import { Button, Card, Row, Col, Input, Navbar, NavItem } from 'react-materialize';
+
+import Header from './nav_bar'
+
+class ManageDatasets extends React.Component {
+	render() {
 		return (
 			<section>
+				<Header />
 				<aside>
 					<h2>Add New Dataset</h2><button>+</button>
 				 	<h2>Edit Existing Dataset</h2>
@@ -40,6 +45,6 @@ var ManageDatasets = React.createClass({
 			</section>
 		)
 	}
-});
+};
 
 export default ManageDatasets;
