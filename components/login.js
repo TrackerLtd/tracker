@@ -34,8 +34,8 @@
     				<Row className="light-primary-color">
     					<Col s={8} offset="s2" className="primary-text-color">
     						<Navbar className="tablist" role="tablist">
-    							<NavItem onClick={ () => this.setState({ mode:'login' }) } role="tab" className={ this.state.mode === 'login' ? "active" : ""}>Login</NavItem>
-    							<NavItem onClick={ () => this.setState({ mode:'signup' }) }role="tab" className={ this.state.mode === 'signup' ? "active" : ""}>Sign-up</NavItem>
+    							<NavItem onClick={ () => this.setState({ mode: 'login' }) } role="tab" className={ this.state.mode === 'login' ? "active" : ""}>Login</NavItem>
+    							<NavItem onClick={ () => this.setState({ mode: 'signup' }) } role="tab" className={ this.state.mode === 'signup' ? "active" : ""}>Sign-up</NavItem>
     						</Navbar>
     						<Card className="panel white" role="tabpanel">
     							<h2>{ this.state.mode }</h2>

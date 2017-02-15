@@ -33,14 +33,13 @@ class App extends React.Component {
 
 	componentDidMount() {
 	  firebase.auth().onAuthStateChanged((user) => {
-      	if(user) {
-        this.login(user.displayName);
-      } else {
-        this.setState({ loggedIn: false })
-      }
-    });
+		if(user) {
+		this.login(user.displayName);
+	  } else {
+		this.setState({ loggedIn: false })
+	  }
+	});
 	}
-
-}	
+}
 
 export default App;
