@@ -18,11 +18,15 @@ class App extends React.Component {
 	}
 
 	render() {
+		return <div>
+			{ React.cloneElement(this.props.children, { loggedIn: this.state.loggedIn, currentUser: this.state.currentUser }) }
+		</div>
+		{/*}
 		if(!this.state.loggedIn) {
 			return <Login onLogin={ (userName) => this.login(userName) } />
 		} else {
 			return <TrackData currentUser={ this.state.currentUser } />
-		}
+		} */}
 	}
 
 	login(userName) {
