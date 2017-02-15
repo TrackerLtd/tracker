@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { browserHistory } from 'react-router';
 
-var TrackData = React.createClass({
-	render: function() {
+class TrackData extends React.Component {
+	render() {
 		return (
 			<main>
 				<section>
@@ -43,6 +44,13 @@ var TrackData = React.createClass({
 			</main>
 		)
 	}
-});
+
+	componentDidMount() {
+		if(!this.props.loggedIn) {
+			console.log(this.props)
+			browserHistory.push('/login');
+		}
+	}
+}
 
 export default TrackData;

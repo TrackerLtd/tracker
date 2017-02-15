@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import { Button, Card, Row, Col } from 'react-materialize';
 
 import App from './components/app';
@@ -22,8 +22,10 @@ import firebase from 'firebase';
   firebase.initializeApp(config);
 
 ReactDOM.render(<Router history={ browserHistory }>
-					<Route path="/" component={ App } />
-					<Route path="/managedata" component={ ManageDatasets } />
-					<Route path="/track" component={ TrackData } />
+          <Route path="/" component={ App } >
+					<Route path="login" component={ Login } />
+					<Route path="managedata" component={ ManageDatasets } />
+					<Route path="track" component={ TrackData } />
+          </Route>
 				</Router>, document.getElementById("placeholder"));
 
