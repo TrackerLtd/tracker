@@ -12,20 +12,20 @@ import styles from './styles/style.css';
 import firebase from 'firebase';
 
 // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyC03jOtrLV6FF2VTSw1h1Igx6EBhT2NToE",
-    authDomain: "tracker-12281.firebaseapp.com",
-    databaseURL: "https://tracker-12281.firebaseio.com",
-    storageBucket: "tracker-12281.appspot.com",
-    messagingSenderId: "802767118279"
-  };
-  firebase.initializeApp(config);
+	var config = {
+		apiKey: "AIzaSyC03jOtrLV6FF2VTSw1h1Igx6EBhT2NToE",
+		authDomain: "tracker-12281.firebaseapp.com",
+		databaseURL: "https://tracker-12281.firebaseio.com",
+		storageBucket: "tracker-12281.appspot.com",
+		messagingSenderId: "802767118279"
+	};
+	firebase.initializeApp(config);
 
 ReactDOM.render(<Router history={ browserHistory }>
-          <Route path="/" component={ App } >
-					<Route path="login" component={ Login } />
-					<Route path="managedata" component={ ManageDatasets } />
-					<Route path="track" component={ TrackData } />
-          </Route>
+					<Route path="/" component={ App } >
+					 <IndexRoute component={ TrackData } />
+					 <Route path="login" component={ Login } />
+					 <Route path="managedata" component={ ManageDatasets } />
+					</Route>
 				</Router>, document.getElementById("placeholder"));
 
