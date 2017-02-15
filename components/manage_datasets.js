@@ -2,10 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button, Card, Row, Col, Input, Navbar, NavItem } from 'react-materialize';
 
+import Header from './nav_bar'
+
 class ManageDatasets extends React.Component {
 	render() {
 		return (
 			<Row>
+				<Header />
 				<Col s={2} >
 					<aside>
 						<h2>Add New Dataset</h2><button>+</button>

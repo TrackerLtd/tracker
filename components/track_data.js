@@ -1,11 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { browserHistory } from 'react-router';
+import { Navbar, NavItem } from 'react-materialize';
+
+import Header from './nav_bar'
 
 class TrackData extends React.Component {
 	render() {
 		return (
 			<main>
+				<Header />
 				<section>
 					<form action="">
 						<label htmlFor="category">
