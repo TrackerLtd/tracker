@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Card, Row, Col, Input, Navbar, NavItem } from 'react-materialize';
+import { Button, Card, Row, Col, Icon, Input, Navbar, NavItem } from 'react-materialize';
 
 import Header from './nav_bar'
 
@@ -9,41 +9,42 @@ class ManageDatasets extends React.Component {
 		return (
 			<Row>
 				<Header />
-				<Col s={2} >
-					<aside>
-						<h2>Add New Dataset</h2><button>+</button>
-					 	<h2>Edit Existing Dataset</h2>
-					 	<ul>
-					 		<li>Currently no datasets to edit</li>
-					 	</ul>
-					</aside>
+				<Col s={4}>
+					<Card className="white"> 
+						<aside>
+							<Button id="addDataset" className="submit dark-primary-color">Add New Dataset<Icon left>library_add</Icon></Button>
+						 	<Button id="editDataset" className="submit dark-primary-color">Edit Existing Dataset<Icon left>mode_edit</Icon></Button>
+						 	<ul>
+						 		<li>Currently no datasets to edit</li>
+						 	</ul>
+						</aside>
+					</Card>
 				</Col>
-				<Col s={6} offset="s2">
-					<section>
-						<h2>Customize Your Dataset</h2>
-						<form>
-							<label htmlFor="title">Title
-								<input type="text" id="title" />
-							</label>
-							<label htmlFor="categories">Create your categories
-								<input type="text" id="categories" />
-							</label>
-							<p>Edit or delete your categories</p>
-							<ul>
-								<li>Currently no categories</li>
-							</ul>
-							<label htmlFor="inputs">Select inputs
-								<input type="checkbox" name="inputs" value="vendor" />Vendor
-								<input type="checkbox" name="inputs" value="amount" />Amount
-								<input type="checkbox" name="inputs" value="date" />Date
-							</label>
-							<label htmlFor="target">Create target data?
-								<input type="radio" name="target" value="yes" checked />Yes
-								<input type="radio" name="target" value="no" />No
-							</label>
-							<input type="submit" value="Let's do this!" />
-						</form>
-					</section>
+				<Col s={8}>
+					<Card className="white"> 
+						<section>
+							<h2>Customize Your Dataset</h2>
+							<Row>
+
+								<Input s={12} type="text" label="Title" id="title" />
+								<Input s={12} type="text" label="Create your categories" id="categories" />
+								<p>Edit or delete your categories</p>
+								<ul>
+									<li>Currently no categories</li>
+								</ul>
+								<Row>
+									<Input type="checkbox" name="inputs" value="vendor" label="Vendor" />
+									<Input type="checkbox" name="inputs" value="amount" label="Amount" />
+									<Input type="checkbox" name="inputs" value="date" label="Date" />
+								</Row>
+								<p>Create target data?</p>
+								<Input type="radio" name="target" value="yes" label="Yes" />
+								<Input type="radio" name="target" value="no" label="No" />
+								
+								<Button id="makeDataset" className="submit dark-primary-color">Let's Do This!<Icon left>done</Icon></Button>
+							</Row>
+						</section>
+					</Card>
 				</Col>
 			</Row>
 		)
