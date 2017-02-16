@@ -6,6 +6,7 @@ import { browserHistory } from 'react-router';
 
 import Login from './login';
 import TrackData from './track_data';
+import ManageDatasets from './manage_datasets';
 
 class App extends React.Component {
 	constructor() {
