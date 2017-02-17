@@ -2,6 +2,7 @@
     import ReactDOM from 'react-dom';
     import { Button, Card, Row, Col, Input, Navbar, NavItem } from 'react-materialize';
     import firebase from 'firebase';
+    import {browserHistory} from 'react-router';
 
     import Alert from './alert';
 
@@ -69,14 +70,14 @@
     		.then(user => {
     			return user.updateProfile({ displayName: this.state.userName })
     		})
-    		.then((user) => { this.props.onLogin(this.state.userName)})
+    		.then((user) => { browserHistory.push('/') } )
     		.catch(error => this.setState({ error: error.message }));
     	}
 
     	login(e) {
     		e.preventDefault();
-    		firebase.auth().signInWithEmailAndPassword(this.state.userName, this.state.password)
-    		.then((user) => this.props.onLogin(user.displayName))
+    		firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+    		.then((user) => { browserHistory.push('/') })
     		.catch((err) => this.setState({ error: err.message }));
     	}
     }

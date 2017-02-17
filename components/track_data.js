@@ -3,13 +3,12 @@ import ReactDOM from 'react-dom';
 import { browserHistory } from 'react-router';
 import { Row, Col, Button, Card, Navbar, NavItem, Form, Input } from 'react-materialize';
 
-import Header from './nav_bar'
+import Header from './header'
 
 class TrackData extends React.Component {
 	render() {
 		return (
 			<main>
-				<Header />
 				<Row>
 					<Col s={4}>
 						<Card className="white">
@@ -47,13 +46,6 @@ class TrackData extends React.Component {
 				</Row>
 			</main>
 		)
-	}
-
-	componentDidMount() {
-		if(!this.props.loggedIn) {
-			console.log(this.props)
-			browserHistory.push('/login');
-		}
 	}
 }
 

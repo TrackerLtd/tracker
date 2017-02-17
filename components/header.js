@@ -11,7 +11,8 @@ class Header extends React.Component {
 			<Navbar brand='Tracker' right>
 				<li><Link to="/">Data Entry & Charts</Link></li>
 				<li><Link to="/managedata">Datasets</Link></li>
-			 	<li><Link to="#">Account</Link></li>
+				<li><Link to="#">Account</Link></li>
+				<li onClick={ () => this.props.onLogout() }>Log Out</li>
 			</Navbar>
 		)
 	}
