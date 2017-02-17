@@ -8,7 +8,7 @@ class Header extends React.Component {
 
 	render() {
 		return (
-			<Navbar brand='Tracker' right>
+			<Navbar className="dark-primary-color" brand='Tracker' right>
 				<li><Link to="/">Data Entry & Charts</Link></li>
 				<li><Link to="/managedata">Datasets</Link></li>
 				<li><Link to="#">Account</Link></li>
