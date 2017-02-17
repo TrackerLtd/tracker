@@ -2,13 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button, Card, Row, Col, Icon, Input, Navbar, NavItem } from 'react-materialize';
 
-import Header from './nav_bar'
+import Header from './header';
 
 class ManageDatasets extends React.Component {
+	constructor() {
+		super();
+	}
 	render() {
 		return (
 			<Row>
-				<Header />
 				<Col s={4}>
 					<Card className="white"> 
 						<aside>
