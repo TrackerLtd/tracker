@@ -8,6 +8,7 @@ class ManageDatasets extends React.Component {
 	constructor() {
 		super();
 	}
+	
 	render() {
 		return (
 			<Row>
@@ -15,10 +16,10 @@ class ManageDatasets extends React.Component {
 					<Card className="white"> 
 						<aside>
 							<Button id="addDataset" className="submit dark-primary-color">Add New Dataset<Icon left>library_add</Icon></Button>
-						 	<Button id="editDataset" className="submit dark-primary-color">Edit Existing Dataset<Icon left>mode_edit</Icon></Button>
-						 	<ul>
-						 		<li>Currently no datasets to edit</li>
-						 	</ul>
+							<Button id="editDataset" className="submit dark-primary-color">Edit Existing Dataset<Icon left>mode_edit</Icon></Button>
+							<ul>
+								<li>Currently no datasets to edit</li>
+							</ul>
 						</aside>
 					</Card>
 				</Col>

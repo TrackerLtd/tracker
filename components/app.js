@@ -14,20 +14,29 @@ class App extends React.Component {
 		super();
 		this.state = {
 			currentUser: null,
-			loggedIn: false
+			loggedIn: false,
+			dataset:
+				{
+					name: '',
+					expenses: [],
+					expenseAttributes: ['category', 'vendor', 'amount', 'date']
+				}
 		}
 
 		this.login = this.login.bind(this);
 		this.logOut = this.logOut.bind(this);
+
 	}
 
 	render() {
 		return (
 			<div>
-				<Header onLogout={ () => this.logOut() }/>
+				<Header onLogout={ () => this.logOut() } />
 				{ React.cloneElement(this.props.children, { 
 						loggedIn: this.state.loggedIn, 
-						currentUser: this.state.currentUser 
+						currentUser: this.state.currentUser,
+						expensesForDisplay: this.state.dataset.expenses,
+						expenseAttributes: this.state.dataset.expenseAttributes
 				} ) }
 			</div>
 		)
@@ -49,6 +58,17 @@ class App extends React.Component {
 			} else {
 				this.logOut();
 			}
+		});
+		
+		let firebaseRef = firebase.database().ref('dataset/expenses');
+		firebaseRef.on('child_added', (snapshot, key) => {
+
+		  const expense = snapshot.val();
+		  expense.id = snapshot.key;
+
+		  const dataset = this.state.dataset;
+		  dataset.expenses = [...this.state.dataset.expenses, expense]
+		  this.setState({ dataset: dataset });
 		});
 	}
 }
