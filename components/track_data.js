@@ -12,7 +12,8 @@ class TrackData extends React.Component {
     constructor() {
         super();
         this.state = {
-            newExpense: {}
+            newExpense: {},
+            mode: 'table'
         }
 
         this.updateNewExpense = this.updateNewExpense.bind(this);
@@ -33,14 +34,19 @@ class TrackData extends React.Component {
                     <Col s={8}>
                         <Card className="white">
                             <Navbar className="tablist right" role="tablist">
-                                <NavItem role="tab">Bar</NavItem>
-                                <NavItem role="tab">Pie</NavItem>
-                                <NavItem role="tab">Line</NavItem>
-                                <NavItem role="tab">Table</NavItem>
+                                <NavItem    role="tab">Bar</NavItem>
+                                <NavItem    role="tab">Pie</NavItem>
+                                <NavItem    role="tab">Line</NavItem>
+                                <NavItem    role="tab" 
+                                            onClick={ () => this.setState({ mode: 'table' }) } 
+                                            className={ this.state.mode === 'table' ? "active" : "" } >Table</NavItem>
                             </Navbar>
                             <div role="tabpanel">
+                                { this.state.mode === 'table' ?
                                 <DatasetTable   expensesForDisplay={ this.props.expensesForDisplay } 
                                                 expenseAttributes={ this.props.expenseAttributes } />
+                                            : ''
+                                }
                             </div>
                             <Button id="date" className="submit dark-primary-color">Compare</Button>
                             <label>
