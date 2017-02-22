@@ -19,6 +19,7 @@ class App extends React.Component {
 				{
 					name: '',
 					expenses: [],
+					expenseCategories: [],
 					expenseAttributes: ['category', 'vendor', 'amount', 'date']
 				}
 		}
@@ -36,6 +37,7 @@ class App extends React.Component {
 						loggedIn: this.state.loggedIn, 
 						currentUser: this.state.currentUser,
 						expensesForDisplay: this.state.dataset.expenses,
+						expenseCategories: this.state.dataset.expenseCategories,
 						expenseAttributes: this.state.dataset.expenseAttributes
 				} ) }
 			</div>
@@ -61,6 +63,7 @@ class App extends React.Component {
 		});
 		
 		let firebaseRef = firebase.database().ref('dataset/expenses');
+		console.log(firebaseRef)
 		firebaseRef.on('child_added', (snapshot, key) => {
 
 		  const expense = snapshot.val();
@@ -68,6 +71,16 @@ class App extends React.Component {
 
 		  const dataset = this.state.dataset;
 		  dataset.expenses = [...this.state.dataset.expenses, expense]
+		  this.setState({ dataset: dataset });
+		});
+
+		let firebaseRef2 = firebase.database().ref('dataset/expenseCategories');
+		firebaseRef2.on('child_added', (snapshot, key) => {
+
+		  const category = snapshot.val();
+
+		  const dataset = this.state.dataset;
+		  dataset.expenseCategories = [...this.state.dataset.expenseCategories, category]
 		  this.setState({ dataset: dataset });
 		});
 	}
