@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import firebase from 'firebase';
 import { Button, Card, Row, Col, Icon, Input, Navbar, NavItem } from 'react-materialize';
 
 import Header from './header';
@@ -7,9 +8,15 @@ import Header from './header';
 class ManageDatasets extends React.Component {
 	constructor() {
 		super();
+		this.state = {
+			newCategory: ''
+		}
+
+		this.submitNewCategory = this.submitNewCategory.bind(this);
 	}
 	
 	render() {
+		console.log(this.props.expenseCategories)
 		return (
 			<Row>
 				<Col s={4}>
@@ -30,10 +37,17 @@ class ManageDatasets extends React.Component {
 							<Row>
 
 								<Input s={12} type="text" label="Title" id="title" />
-								<Input s={12} type="text" label="Create your categories" id="categories" />
+								<Input s={10} type="text" label="Create your categories" id="categories" onChange={ (e) => this.setState({ newCategory: e.target.value }) }/>
+								<Button id="addCategory" className="submit dark-primary-color" onClick={ () => this.submitNewCategory() }>Add</Button>
 								<p>Edit or delete your categories</p>
 								<ul>
-									<li>Currently no categories</li>
+									<li>Current categories: 
+
+										{ this.props.expenseCategories.map(category => {
+											let thiscategory = category;
+											return <span> {category} </span>
+										}) }
+									</li>
 								</ul>
 								<Row>
 									<Input type="checkbox" name="inputs" value="vendor" label="Vendor" />
@@ -51,6 +65,14 @@ class ManageDatasets extends React.Component {
 				</Col>
 			</Row>
 		)
+	}
+
+	submitNewCategory() {
+	    let firebaseRef = firebase.database().ref('dataset/expenseCategories');
+	    const newCategory = this.state.newCategory;
+	    firebaseRef.push(newCategory);
+
+	    this.setState({ newCategory: '' });
 	}
 }
 

@@ -32,7 +32,6 @@ class TrackData extends React.Component {
     }
 
     render() {
-        console.log(this.state, this.props)
         return (
             <main>
                 <Row>
@@ -40,7 +39,8 @@ class TrackData extends React.Component {
                         <Card className="white">
                             <AddExpense newExpense={ this.state.newExpense }
                                         onUpdateNewExpense={ (e, id) => this.updateNewExpense(e, id) } 
-                                        onSubmitNewExpense={ () => this.submitNewExpense() } />
+                                        onSubmitNewExpense={ () => this.submitNewExpense() } 
+                                        expenseCategories={ this.props.expenseCategories } />
                         </Card>
                     </Col>
                     <Col s={8}>
