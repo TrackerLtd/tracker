@@ -28,16 +28,18 @@ class TrackData extends React.Component {
 
         this.updateNewExpense = this.updateNewExpense.bind(this);
         this.submitNewExpense = this.submitNewExpense.bind(this);
+        this.renderDetails = this.renderDetails.bind(this);
     }
 
     render() {
-        console.log(this.state)
+        console.log(this.state, this.props)
         return (
             <main>
                 <Row>
                     <Col s={4}>
                         <Card className="white">
-                            <AddExpense onUpdateNewExpense={ (e, id) => this.updateNewExpense(e, id) } 
+                            <AddExpense newExpense={ this.state.newExpense }
+                                        onUpdateNewExpense={ (e, id) => this.updateNewExpense(e, id) } 
                                         onSubmitNewExpense={ () => this.submitNewExpense() } />
                         </Card>
                     </Col>
@@ -54,14 +56,7 @@ class TrackData extends React.Component {
                                             className={ this.state.mode === 'table' ? "active" : "" } >Table</NavItem>
                             </Navbar>
                             <div role="tabpanel">
-                                { this.state.mode === 'table' ?
-                                <DatasetTable   expensesForDisplay={ this.props.expensesForDisplay } 
-                                                expenseAttributes={ this.props.expenseAttributes } />
-                                            : ''
-                                }
-                                { this.state.mode === 'line' ?
-                                <DatasetLine lineData={ this.state.data } /> : ''
-                                }
+                                { this.renderDetails() }
                             </div>
                             <Button id="date" className="submit dark-primary-color">Compare</Button>
                             <label>
@@ -76,6 +71,19 @@ class TrackData extends React.Component {
         )
     }
 
+    renderDetails() {
+
+        switch (this.state.mode) {
+            case 'line':
+                return <DatasetLine 
+                            lineData={ this.state.data } /> ;
+            case 'table':
+                return <DatasetTable   
+                            expensesForDisplay={ this.props.expensesForDisplay } 
+                            expenseAttributes={ this.props.expenseAttributes } />;
+        }
+    }
+
     updateNewExpense(e, id) {
         const newExpense = this.state.newExpense;
         newExpense[id] = e.target.value;
@@ -87,7 +95,7 @@ class TrackData extends React.Component {
         const newExpense = this.state.newExpense;
         firebaseRef.push(newExpense);
 
-        this.setState({ newExpense: '' });
+        this.setState({ newExpense: { category: newExpense.category } });
     }
 }
 
