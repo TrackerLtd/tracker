@@ -5,7 +5,7 @@ import { Table } from 'react-materialize';
 class DatasetTable extends React.Component {
 
 	render() {
-		// console.log(this.props.expensesForDisplay)
+		console.log(this.props.expensesForDisplay)
 
 		return (
 			<Table>
@@ -23,10 +23,10 @@ class DatasetTable extends React.Component {
 					
 					{ this.props.expensesForDisplay.map(expense => {
 						// for each expense, return a new row of the table
-						return <tr> { this.props.expenseAttributes.map(attr => {
+						return <tr>{ this.props.expenseAttributes.map(attr => {
 							// for each table cell, use the array of attributes to key into the expense, and output the value at that key
 							return <td>{ expense[attr] }</td>
-						}) } </tr>
+						}) }</tr>
 					}) }
 				</tbody>
 			</Table>
