@@ -14,21 +14,13 @@ class TrackData extends React.Component {
         super();
         this.state = {
             newExpense: {},
-            mode: 'line',
-            data: [
-                  {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
-                  {name: 'Page B', uv: 3000, pv: 1398, amt: 2210},
-                  {name: 'Page C', uv: 2000, pv: 9800, amt: 2290},
-                  {name: 'Page D', uv: 2780, pv: 3908, amt: 2000},
-                  {name: 'Page E', uv: 1890, pv: 4800, amt: 2181},
-                  {name: 'Page F', uv: 2390, pv: 3800, amt: 2500},
-                  {name: 'Page G', uv: 3490, pv: 4300, amt: 2100},
-            ]
+            mode: 'line'
         }
 
         this.updateNewExpense = this.updateNewExpense.bind(this);
         this.submitNewExpense = this.submitNewExpense.bind(this);
         this.renderDetails = this.renderDetails.bind(this);
+        this.getTotalExpenses = this.getTotalExpenses.bind(this);
     }
 
     render() {
@@ -58,7 +50,6 @@ class TrackData extends React.Component {
                             <div role="tabpanel">
                                 { this.renderDetails() }
                             </div>
-                            <Button id="date" className="submit dark-primary-color">Compare</Button>
                             <label>
                                 Show Target Dataset
                                 <Input name='on' type='switch' value='1' />
@@ -96,6 +87,36 @@ class TrackData extends React.Component {
         firebaseRef.push(newExpense);
 
         this.setState({ newExpense: { category: newExpense.category } });
+    }
+
+    getTotalExpenses() {
+        // split array of all expenses by category, reduce the amounts of each category to get bar chart data, in following format 
+        // barData: [
+        //      { cat: cat1, expense: expenseTotal1 },
+        //      { cat: cat2, expense: expenseTotal2 }
+        // ]
+        let expenses = this.props.expensesForDisplay;
+        let categories = expenses.reduce(function(obj, item){
+                        obj[item.category] = obj[item.category] || [];
+                        obj[item.category].push(item);
+                        return obj;
+                    }, {});
+
+        console.log(categories);
+
+        let resultArray = Object.keys(categories).map((key) => { 
+            const expensesForCategory = categories[key];
+            const categorySum = expensesForCategory.reduce((total, value) => {
+                return total += parseFloat(value.amount, 10);
+            }, 0); 
+
+            return { category: key, total: categorySum };
+        });
+
+        console.log(resultArray);
+
+        console.log(resultArray)
+       
     }
 }
 
