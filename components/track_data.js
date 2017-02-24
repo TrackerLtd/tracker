@@ -8,13 +8,15 @@ import Header from './header';
 import AddExpense from './add_expense';
 import DatasetTable from './dataset_table';
 import DatasetLine from './dataset_line';
+import DatasetBar from './dataset_bar';
 
 class TrackData extends React.Component {
     constructor() {
         super();
         this.state = {
             newExpense: {},
-            mode: 'line'
+            mode: 'line',
+            piebarData: []
         }
 
         this.updateNewExpense = this.updateNewExpense.bind(this);
@@ -38,7 +40,9 @@ class TrackData extends React.Component {
                     <Col s={8}>
                         <Card className="white">
                             <Navbar className="tablist right" role="tablist">
-                                <NavItem    role="tab">Bar</NavItem>
+                                <NavItem    role="tab"
+                                            onClick={ () => this.getTotalExpenses() } 
+                                            className={ this.state.mode === 'bar' ? "active" : "" }>Bar</NavItem>
                                 <NavItem    role="tab">Pie</NavItem>
                                 <NavItem    role="tab"
                                             onClick={ () => this.setState({ mode: 'line' }) } 
@@ -65,6 +69,9 @@ class TrackData extends React.Component {
     renderDetails() {
 
         switch (this.state.mode) {
+            case 'bar':
+                return <DatasetBar 
+                            barData={ this.state.piebarData } />;
             case 'line':
                 return <DatasetLine 
                             lineData={ this.state.data } /> ;
@@ -89,20 +96,16 @@ class TrackData extends React.Component {
         this.setState({ newExpense: { category: newExpense.category } });
     }
 
-    getTotalExpenses() {
-        // split array of all expenses by category, reduce the amounts of each category to get bar chart data, in following format 
-        // barData: [
-        //      { cat: cat1, expense: expenseTotal1 },
-        //      { cat: cat2, expense: expenseTotal2 }
-        // ]
+    getTotalExpenses(e) {
+
+        this.setState({ mode: 'bar' })
+
         let expenses = this.props.expensesForDisplay;
         let categories = expenses.reduce(function(obj, item){
                         obj[item.category] = obj[item.category] || [];
                         obj[item.category].push(item);
                         return obj;
                     }, {});
-
-        console.log(categories);
 
         let resultArray = Object.keys(categories).map((key) => { 
             const expensesForCategory = categories[key];
@@ -113,10 +116,8 @@ class TrackData extends React.Component {
             return { category: key, total: categorySum };
         });
 
-        console.log(resultArray);
-
-        console.log(resultArray)
-       
+        this.setState({ piebarData: resultArray });
+      
     }
 }
 
