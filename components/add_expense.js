@@ -9,8 +9,8 @@ class AddExpense extends React.Component {
 		    <Input s={12} label="Category" type="select" name="category" id="category" 
 		    		onChange={ (evt) => this.props.onUpdateNewExpense(evt, evt.target.id) }
 		    		value={ this.props.newExpense.category } >
-		    	{ this.props.expenseCategories.map(category => {
-		    		return <option value="{ category }">{ category }</option>
+		    	{ Object.keys(this.props.expenseCategories).map(key => {
+		    		return <option value={ this.props.expenseCategories[key] } key={ key }>{ this.props.expenseCategories[key] }</option>
 		    	}) }
 		    </Input>
 		    <Input s={12} label="Vendor" type="text" id="vendor" 

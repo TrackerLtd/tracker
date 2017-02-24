@@ -19,7 +19,7 @@ class App extends React.Component {
 				{
 					name: '',
 					expenses: [],
-					expenseCategories: [],
+					expenseCategories: {},
 					expenseAttributes: ['category', 'vendor', 'amount', 'date']
 				}
 		}
@@ -66,22 +66,22 @@ class App extends React.Component {
 		console.log(firebaseRef)
 		firebaseRef.on('child_added', (snapshot, key) => {
 
-		  const expense = snapshot.val();
-		  expense.id = snapshot.key;
+			const expense = snapshot.val();
+			expense.id = snapshot.key;
 
-		  const dataset = this.state.dataset;
-		  dataset.expenses = [...this.state.dataset.expenses, expense]
-		  this.setState({ dataset: dataset });
+			const dataset = this.state.dataset;
+			dataset.expenses = [...this.state.dataset.expenses, expense]
+			this.setState({ dataset: dataset });
 		});
 
 		let firebaseRef2 = firebase.database().ref('dataset/expenseCategories');
 		firebaseRef2.on('child_added', (snapshot, key) => {
 
-		  const category = snapshot.val();
+			const category = snapshot.val();
 
-		  const dataset = this.state.dataset;
-		  dataset.expenseCategories = [...this.state.dataset.expenseCategories, category]
-		  this.setState({ dataset: dataset });
+			const dataset = this.state.dataset;
+			dataset.expenseCategories[key] = category;
+			this.setState({ dataset: dataset });
 		});
 	}
 }

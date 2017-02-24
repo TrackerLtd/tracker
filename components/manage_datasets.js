@@ -9,14 +9,14 @@ class ManageDatasets extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			newCategory: ''
+			newCategory: '',
+			modifiedCategory: ''
 		}
 
 		this.submitNewCategory = this.submitNewCategory.bind(this);
 	}
 	
 	render() {
-		console.log(this.props.expenseCategories)
 		return (
 			<Row>
 				<Col s={4}>
@@ -37,18 +37,28 @@ class ManageDatasets extends React.Component {
 							<Row>
 
 								<Input s={12} type="text" label="Title" id="title" />
-								<Input s={10} type="text" label="Create your categories" id="categories" onChange={ (e) => this.setState({ newCategory: e.target.value }) }/>
-								<Button id="addCategory" className="submit dark-primary-color" onClick={ () => this.submitNewCategory() }>Add</Button>
-								<p>Edit or delete your categories</p>
+								<Row s={12}>
+									<Input s={10} type="text" label="Create your categories" id="categories" onChange={ (e) => this.setState({ newCategory: e.target.value }) }/>
+									<Button id="addCategory" className="submit dark-primary-color" 
+											onClick={ () => this.submitNewCategory() }>Add</Button>
+								</Row>
 								<ul>
-									<li>Current categories: 
+									<li><strong>Current categories:</strong> 
 
-										{ this.props.expenseCategories.map(category => {
-											let thiscategory = category;
-											return <span> {category} </span>
+										{ Object.keys(this.props.expenseCategories).map(key => {
+											return <Col>
+														<Input className="category" type="text" defaultValue={ this.props.expenseCategories[key] }
+															onChange={ (e) => this.setState({ modifiedCategory: e.target.value }) }/>
+														<Button onClick={ () => this.modifyCategory(this.props.expenseCategories[key]) } ><Icon>mode_edit</Icon></Button>
+														<Button onClick={ () => this.deleteCategory(this.props.expenseCategories[key]) } ><Icon>delete</Icon></Button>
+													</Col>
 										}) }
 									</li>
 								</ul>
+								<Row s={12}>
+									<Button id="modifyCategory" className="dark-primary-color"
+											onClick={ () => this.modifyCategory() } >Edit or delete Categories</Button>
+								</Row>
 								<Row>
 									<Input type="checkbox" name="inputs" value="vendor" label="Vendor" />
 									<Input type="checkbox" name="inputs" value="amount" label="Amount" />
@@ -73,6 +83,19 @@ class ManageDatasets extends React.Component {
 	    firebaseRef.push(newCategory);
 
 	    this.setState({ newCategory: '' });
+	}
+
+	modifyCategory(e, category) {
+	}
+
+	deleteCategory(category) {
+		const categories = this.props.expenseCategories;
+		const updatedCategories = categories.filter( expense => {
+			return expense !== category;
+		});
+
+		let firebaseRef = firebase.database().ref('dataset/expenseCategories');
+		firebaseRef = updatedCategories;
 	}
 }
 
