@@ -9,6 +9,7 @@ import AddExpense from './add_expense';
 import DatasetTable from './dataset_table';
 import DatasetLine from './dataset_line';
 import DatasetBar from './dataset_bar';
+import DatasetPie from './dataset_pie';
 
 class TrackData extends React.Component {
     constructor() {
@@ -49,7 +50,7 @@ class TrackData extends React.Component {
                                             onClick={ () => this.setState({ mode: 'bar' }) } 
                                             className={ this.state.mode === 'bar' ? "active" : "" }>Bar</NavItem>
                                 <NavItem    role="tab"
-                                            onClick={ () => this.getTotalExpenses() } 
+                                            onClick={ () => this.setState({ mode: 'pie' }) } 
                                             className={ this.state.mode === 'pie' ? "active" : "" }>Pie</NavItem>
                                 <NavItem    role="tab"
                                             onClick={ () => this.setState({ mode: 'line' }) } 
@@ -78,11 +79,11 @@ class TrackData extends React.Component {
         switch (this.state.mode) {
             case 'bar':
                 return <DatasetBar 
-                            barData={ this.getTotalExpenses(this.props.expensesForDisplay) } />;
+                            formattedData={ this.getTotalExpenses(this.props.expensesForDisplay) } />;
                 // return <DatasetBar barData={ this.transform(this.state.rawData) }
             case 'pie':
-                return <DatasetBar 
-                            barData={ this.state.piebarData } />;
+                return <DatasetPie 
+                            formattedData={ this.getTotalExpenses(this.props.expensesForDisplay) } />;
             case 'line':
                 return <DatasetLine 
                             lineData={ this.state.data } /> ;
@@ -131,7 +132,7 @@ class TrackData extends React.Component {
                 return total += parseFloat(value.amount, 10);
             }, 0); 
 
-            return { category: key, total: categorySum };
+            return { name: key, value: categorySum };
         });
 
         return resultArray;
