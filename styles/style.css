@@ -85,3 +85,23 @@ i.e.
   h2 {
     text-transform: capitalize;
   }
+
+  .material-icons {
+    pointer-events: none;
+  }
+  
+  .current-categories .col {
+    float: none;
+    display: inline-block;
+  }
+
+  .current-categories .col.input-field {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .current-categories .btn {
+    padding: 0 10px;
+    vertical-align: middle;
+    margin-top: 20px;
+  }

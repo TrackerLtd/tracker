@@ -5,7 +5,6 @@ import { Table } from 'react-materialize';
 class DatasetTable extends React.Component {
 
 	render() {
-		console.log(this.props.expensesForDisplay)
 
 		return (
 			<Table>

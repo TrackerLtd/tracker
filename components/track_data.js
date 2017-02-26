@@ -14,8 +14,13 @@ class TrackData extends React.Component {
     constructor() {
         super();
         this.state = {
-            newExpense: {},
-            mode: 'line',
+            newExpense: {   
+                            category: '',
+                            vendor: '',
+                            amount: '',
+                            date: '' 
+                        },
+            mode: 'table',
             piebarData: []
         }
 
@@ -72,6 +77,7 @@ class TrackData extends React.Component {
             case 'bar':
                 return <DatasetBar 
                             barData={ this.state.piebarData } />;
+                // return <DatasetBar barData={ this.transform(this.state.rawData) }
             case 'line':
                 return <DatasetLine 
                             lineData={ this.state.data } /> ;
@@ -89,11 +95,21 @@ class TrackData extends React.Component {
     }
 
     submitNewExpense() {
-        let firebaseRef = firebase.database().ref('dataset/expenses');
-        const newExpense = this.state.newExpense;
-        firebaseRef.push(newExpense);
+        if( this.props.expenseAttributes.length === Object.keys(this.state.newExpense).length ) {
+            let firebaseRef = firebase.database().ref('dataset/expenses');
+            const newExpense = this.state.newExpense;
+            firebaseRef.push(newExpense);
 
-        this.setState({ newExpense: { category: newExpense.category } });
+            this.setState({ newExpense: { 
+                                            category: newExpense.category,
+                                            vendor: '',
+                                            amount: '',
+                                            date: ''
+                                        } });
+        } else {
+            console.log('empty key!')
+        }
+        
     }
 
     getTotalExpenses(e) {
