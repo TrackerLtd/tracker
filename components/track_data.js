@@ -14,6 +14,7 @@ class TrackData extends React.Component {
     constructor() {
         super();
         this.state = {
+            // should this be an empty object?
             newExpense: {   
                             category: '',
                             vendor: '',
@@ -47,7 +48,9 @@ class TrackData extends React.Component {
                                 <NavItem    role="tab"
                                             onClick={ () => this.setState({ mode: 'bar' }) } 
                                             className={ this.state.mode === 'bar' ? "active" : "" }>Bar</NavItem>
-                                <NavItem    role="tab">Pie</NavItem>
+                                <NavItem    role="tab"
+                                            onClick={ () => this.getTotalExpenses() } 
+                                            className={ this.state.mode === 'pie' ? "active" : "" }>Pie</NavItem>
                                 <NavItem    role="tab"
                                             onClick={ () => this.setState({ mode: 'line' }) } 
                                             className={ this.state.mode === 'line' ? "active" : "" }>Line</NavItem>
