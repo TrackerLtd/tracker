@@ -12,7 +12,6 @@ const DatasetBar = React.createClass({
        <CartesianGrid strokeDasharray="3 3"/>
        <Tooltip/>
        <Bar dataKey="total" fill="#FF4081" />
-       <Legend />
       </BarChart>
     );
   }
