@@ -21,8 +21,7 @@ class TrackData extends React.Component {
                             amount: '',
                             date: '' 
                         },
-            mode: 'table',
-            piebarData: []
+            mode: 'table'
         }
 
         this.updateNewExpense = this.updateNewExpense.bind(this);
@@ -47,7 +46,7 @@ class TrackData extends React.Component {
                         <Card className="white">
                             <Navbar className="tablist right" role="tablist">
                                 <NavItem    role="tab"
-                                            onClick={ () => this.getTotalExpenses() } 
+                                            onClick={ () => this.setState({ mode: 'bar' }) } 
                                             className={ this.state.mode === 'bar' ? "active" : "" }>Bar</NavItem>
                                 <NavItem    role="tab"
                                             onClick={ () => this.getTotalExpenses() } 
@@ -79,8 +78,11 @@ class TrackData extends React.Component {
         switch (this.state.mode) {
             case 'bar':
                 return <DatasetBar 
-                            barData={ this.state.piebarData } />;
+                            barData={ this.getTotalExpenses(this.props.expensesForDisplay) } />;
                 // return <DatasetBar barData={ this.transform(this.state.rawData) }
+            case 'pie':
+                return <DatasetBar 
+                            barData={ this.state.piebarData } />;
             case 'line':
                 return <DatasetLine 
                             lineData={ this.state.data } /> ;
@@ -115,12 +117,9 @@ class TrackData extends React.Component {
         
     }
 
-    getTotalExpenses(e) {
+    getTotalExpenses(rawData) {
 
-        this.setState({ mode: 'bar' })
-
-        let expenses = this.props.expensesForDisplay;
-        let categories = expenses.reduce(function(obj, item){
+        let categories = rawData.reduce(function(obj, item){
                         obj[item.category] = obj[item.category] || [];
                         obj[item.category].push(item);
                         return obj;
@@ -135,8 +134,7 @@ class TrackData extends React.Component {
             return { category: key, total: categorySum };
         });
 
-        this.setState({ piebarData: resultArray });
-      
+        return resultArray;
     }
 }
 

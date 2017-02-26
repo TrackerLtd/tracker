@@ -44,7 +44,7 @@ class ManageDatasets extends React.Component {
 								</Row>
 								<ul>
 									<li className="current-categories"><strong>Current categories:</strong> 
-										<div class="clearfix">
+										<div className="clearfix">
 											{ Object.keys(this.props.expenseCategories).map(key => {
 												let categoryName = this.props.expenseCategories[key];
 												return <Col key={ key }>
