@@ -30,6 +30,7 @@ class App extends React.Component {
 	}
 
 	render() {
+		console.log(this.state.dataset.expenseCategories)
 		return (
 			<div>
 				<Header onLogout={ () => this.logOut() } />
@@ -63,7 +64,6 @@ class App extends React.Component {
 		});
 		
 		let firebaseRef = firebase.database().ref('dataset/expenses');
-		console.log(firebaseRef)
 		firebaseRef.on('child_added', (snapshot, key) => {
 
 			const expense = snapshot.val();
@@ -78,10 +78,18 @@ class App extends React.Component {
 		firebaseRef2.on('child_added', (snapshot, key) => {
 
 			const category = snapshot.val();
-
+			const identifier = snapshot.key;
 			const dataset = this.state.dataset;
-			dataset.expenseCategories[key] = category;
+			dataset.expenseCategories[identifier] = category;
 			this.setState({ dataset: dataset });
+		});
+		firebaseRef2.on('child_removed', (snapshot) => {
+			const dataset = this.state.dataset;
+			const key = snapshot.key;
+			console.log(key);
+			delete dataset.expenseCategories[key];
+			console.log(dataset.expenseCategories);
+			this.setState({dataset: dataset });
 		});
 	}
 }

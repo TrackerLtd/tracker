@@ -4,7 +4,6 @@ import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recha
 
 const DatasetBar = React.createClass({
 	render () {
-    console.log(this.props.piebarData);
   	return (
     	<BarChart width={600} height={300} data={this.props.barData}
             margin={{top: 5, right: 30, left: 20, bottom: 5}}>
