@@ -13,7 +13,7 @@ class AddExpense extends React.Component {
 		    		return <option value={ this.props.expenseCategories[key] } key={ key }>{ this.props.expenseCategories[key] }</option>
 		    	}) }
 		    </Input>
-		    <Input s={12} label="Vendor" type="text" id="vendor" 
+		    <Input s={12} label="Vendor" type="text" id="vendor"
 		    		value={ this.props.newExpense.vendor }
 		    		onChange={ (evt) => this.props.onUpdateNewExpense(evt, evt.target.id) } />
 		    <Input s={12} label="Amount" type="text" id="amount" 

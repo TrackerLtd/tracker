@@ -89,6 +89,12 @@ i.e.
   .material-icons {
     pointer-events: none;
   }
+
+  th .material-icons {
+    font-size: 100%;
+    padding-left: 5px;
+    padding-top: 5px;
+  }
   
   .current-categories .col {
     float: none;
@@ -104,4 +110,17 @@ i.e.
     padding: 0 10px;
     vertical-align: middle;
     margin-top: 20px;
+  }
+
+  .nav-wrapper {
+    position: relative;
+    z-index: 5;
+  }
+
+  div[role="tabpanel"] {
+    min-height: 400px;
+  }
+
+  .recharts-wrapper {
+    top: 25px;
   }

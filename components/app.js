@@ -20,17 +20,18 @@ class App extends React.Component {
 					name: '',
 					expenses: [],
 					expenseCategories: {},
-					expenseAttributes: ['category', 'vendor', 'amount', 'date']
+					expenseAttributes: ['category', 'vendor', 'amount', 'date'],
+					sortingProperty: 'category'
 				}
 		}
 
 		this.login = this.login.bind(this);
 		this.logOut = this.logOut.bind(this);
+		this.sortExpenses = this.sortExpenses.bind(this);
 
 	}
 
 	render() {
-		console.log(this.state.dataset.expenseCategories)
 		return (
 			<div>
 				<Header onLogout={ () => this.logOut() } />
@@ -39,7 +40,8 @@ class App extends React.Component {
 						currentUser: this.state.currentUser,
 						expensesForDisplay: this.state.dataset.expenses,
 						expenseCategories: this.state.dataset.expenseCategories,
-						expenseAttributes: this.state.dataset.expenseAttributes
+						expenseAttributes: this.state.dataset.expenseAttributes,
+						sortExpenses: (property) => this.sortExpenses(property)
 				} ) }
 			</div>
 		)
@@ -52,6 +54,31 @@ class App extends React.Component {
 	logOut() {
 		this.setState({ loggedIn: false, currentUser: null });
 		browserHistory.push('/login');
+	}
+
+	sortExpenses(property) {
+		let expensesForDisplay = this.state.dataset.expenses;
+		let sortingProperty = this.state.dataset.sortingProperty;
+
+		function compare(a,b) {
+			if(property === 'amount') {
+				return parseFloat(a[property]) - parseFloat(b[property]);
+			} else if(property === 'date') {
+				return a[property].replace(/-/g, '') - b[property].replace(/-/g, '');
+			} else {
+				if (a[property].toLowerCase() < b[property].toLowerCase())
+					return -1;
+				if (a[property].toLowerCase() > b[property].toLowerCase())
+					return 1;
+				return 0;
+			}
+		}
+
+		var updatedExpenses = expensesForDisplay.sort(compare);
+
+		this.setState({ sortingProperty: property,
+						expensesForDisplay: updatedExpenses });
+		console.log(this.state)
 	}
 
 	componentDidMount() {
@@ -86,9 +113,7 @@ class App extends React.Component {
 		firebaseRef2.on('child_removed', (snapshot) => {
 			const dataset = this.state.dataset;
 			const key = snapshot.key;
-			console.log(key);
 			delete dataset.expenseCategories[key];
-			console.log(dataset.expenseCategories);
 			this.setState({dataset: dataset });
 		});
 	}
