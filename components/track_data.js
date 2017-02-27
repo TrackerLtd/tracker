@@ -86,7 +86,7 @@ class TrackData extends React.Component {
                             formattedData={ this.getTotalExpenses(this.props.expensesForDisplay) } />;
             case 'line':
                 return <DatasetLine 
-                            lineData={ this.state.data } /> ;
+                            lineData={ this.getTotalExpenses(this.props.expensesForDisplay) } /> ;
             case 'table':
                 return <DatasetTable   
                             expensesForDisplay={ this.props.expensesForDisplay } 
@@ -125,6 +125,8 @@ class TrackData extends React.Component {
                         obj[item.category].push(item);
                         return obj;
                     }, {});
+        console.log(categories);
+        
 
         let resultArray = Object.keys(categories).map((key) => { 
             const expensesForCategory = categories[key];

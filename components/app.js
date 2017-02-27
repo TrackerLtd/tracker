@@ -30,7 +30,6 @@ class App extends React.Component {
 	}
 
 	render() {
-		console.log(this.state.dataset.expenseCategories)
 		return (
 			<div>
 				<Header onLogout={ () => this.logOut() } />
@@ -86,9 +85,7 @@ class App extends React.Component {
 		firebaseRef2.on('child_removed', (snapshot) => {
 			const dataset = this.state.dataset;
 			const key = snapshot.key;
-			console.log(key);
 			delete dataset.expenseCategories[key];
-			console.log(dataset.expenseCategories);
 			this.setState({dataset: dataset });
 		});
 	}
