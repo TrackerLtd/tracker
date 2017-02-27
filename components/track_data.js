@@ -29,6 +29,7 @@ class TrackData extends React.Component {
         this.submitNewExpense = this.submitNewExpense.bind(this);
         this.renderDetails = this.renderDetails.bind(this);
         this.getTotalExpenses = this.getTotalExpenses.bind(this);
+        this.getMonthlyExpenses = this.getMonthlyExpenses.bind(this);
     }
 
     render() {
@@ -86,7 +87,7 @@ class TrackData extends React.Component {
                             formattedData={ this.getTotalExpenses(this.props.expensesForDisplay) } />;
             case 'line':
                 return <DatasetLine 
-                            lineData={ this.state.data } /> ;
+                            lineData={ this.getMonthlyExpenses(this.props.expensesForDisplay) } /> ;
             case 'table':
                 return <DatasetTable   
                             expensesForDisplay={ this.props.expensesForDisplay } 
@@ -137,6 +138,38 @@ class TrackData extends React.Component {
 
         return resultArray;
     }
+
+    getMonthlyExpenses(rawData) {
+
+        console.log(rawData);
+
+        // Feb. 26, 2017, need to change one property value in every object in an array
+        // Thanks to http://stackoverflow.com/questions/42306471/iterate-over-array-of-objects-and-change-one-property-in-each-object
+        const data = rawData;
+        const split = date => date.split('-')[1];
+        const result = data.map(o => {
+            o.date = split(o.date);
+            return o;
+        })
+
+        let allMonths = result.reduce(function(obj, item){
+                        obj[item.date] = obj[item.date] || [];
+                        obj[item.date].push(item);
+                        return obj;
+                    }, {});
+
+        let resultArray = Object.keys(allMonths).map((key) => { 
+            const expensesForMonth = allMonths[key];
+            const monthSum = expensesForMonth.reduce((total, value) => {
+                return total += parseFloat(value.amount, 10);
+            }, 0); 
+
+            return { name: key, value: monthSum };
+        });
+
+        return resultArray;
+    }
+
 }
 
 export default TrackData;
