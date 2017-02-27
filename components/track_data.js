@@ -15,13 +15,7 @@ class TrackData extends React.Component {
     constructor() {
         super();
         this.state = {
-            // should this be an empty object?
-            newExpense: {   
-                            category: '',
-                            vendor: '',
-                            amount: '',
-                            date: '' 
-                        },
+            newExpense: {},
             mode: 'table'
         }
 
@@ -39,6 +33,7 @@ class TrackData extends React.Component {
                     <Col s={4}>
                         <Card className="white">
                             <AddExpense newExpense={ this.state.newExpense }
+                                        defaultExpense={ this.state.defaultExpense }
                                         onUpdateNewExpense={ (e, id) => this.updateNewExpense(e, id) } 
                                         onSubmitNewExpense={ () => this.submitNewExpense() } 
                                         expenseCategories={ this.props.expenseCategories } />
@@ -90,7 +85,8 @@ class TrackData extends React.Component {
             case 'table':
                 return <DatasetTable   
                             expensesForDisplay={ this.props.expensesForDisplay } 
-                            expenseAttributes={ this.props.expenseAttributes } />;
+                            expenseAttributes={ this.props.expenseAttributes } 
+                            sortExpenses={ (property) => this.props.sortExpenses(property) } />;
         }
     }
 
@@ -105,13 +101,9 @@ class TrackData extends React.Component {
             let firebaseRef = firebase.database().ref('dataset/expenses');
             const newExpense = this.state.newExpense;
             firebaseRef.push(newExpense);
-
-            this.setState({ newExpense: { 
-                                            category: newExpense.category,
-                                            vendor: '',
-                                            amount: '',
-                                            date: ''
-                                        } });
+            
+            let resetExpense = { category: newExpense.category }
+            this.setState({ newExpense: resetExpense });
         } else {
             console.log('empty key!')
         }

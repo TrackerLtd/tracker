@@ -60,11 +60,11 @@ class ManageDatasets extends React.Component {
 										</div>
 									</li>
 								</ul>
-									<Row s={12} >
+									{ /* <Row s={12} >
 										<Input type="checkbox" name="inputs" value="vendor" label="Vendor" />
 										<Input type="checkbox" name="inputs" value="amount" label="Amount" />
 										<Input type="checkbox" name="inputs" value="date" label="Date" />
-									</Row>
+									</Row> */ }
 
 								<p>Create target data?</p>
 								<Input type="radio" name="target" value="yes" label="Yes" />
