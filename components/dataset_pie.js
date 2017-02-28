@@ -25,10 +25,10 @@ const DatasetPie = React.createClass({
         <Pie
           data={data} 
           cx={300} 
-          cy={200} 
+          cy={150} 
           labelLine={false}
           label={renderCustomizedLabel}
-          outerRadius={80} 
+          outerRadius={125} 
           fill="#8884d8"
         >
           {

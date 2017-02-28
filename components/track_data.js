@@ -58,10 +58,6 @@ class TrackData extends React.Component {
                             <div role="tabpanel">
                                 { this.renderDetails() }
                             </div>
-                            <label>
-                                Show Target Dataset
-                                <Input name='on' type='switch' value='1' />
-                            </label>
                             
                         </Card>
                     </Col>
@@ -111,13 +107,12 @@ class TrackData extends React.Component {
     }
 
     getTotalExpenses(rawData) {
-
+        console.log(rawData);
         let categories = rawData.reduce(function(obj, item){
                         obj[item.category] = obj[item.category] || [];
                         obj[item.category].push(item);
                         return obj;
                     }, {});
-        console.log(categories);
         
 
         let resultArray = Object.keys(categories).map((key) => { 
@@ -134,11 +129,10 @@ class TrackData extends React.Component {
 
     getMonthlyExpenses(rawData) {
 
-        console.log(rawData);
-
         // Feb. 26, 2017, need to change one property value in every object in an array
         // Thanks to http://stackoverflow.com/questions/42306471/iterate-over-array-of-objects-and-change-one-property-in-each-object
         const data = rawData;
+
         const split = date => date.split('-')[1];
         const result = data.map(o => {
             o.date = split(o.date);
@@ -159,8 +153,20 @@ class TrackData extends React.Component {
 
             return { name: key, value: monthSum };
         });
+        
+        let numberedArray = resultArray.map(item => {
+            item.name = parseFloat(item.name, 10);
+            return item
+        })
 
-        return resultArray;
+        let sortedArray = numberedArray.sort(function(a, b) {
+            return a.name - b.name;
+        });
+
+        // return state to as it was before formatting date
+        console.log(rawData);
+
+        return sortedArray;
     }
 
 }
