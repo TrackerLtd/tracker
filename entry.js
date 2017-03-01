@@ -11,6 +11,9 @@ import TrackData from './components/track_data';
 import styles from './styles/style.css';
 import firebase from 'firebase';
 
+require("file?name=[name].[ext]!./index.html");
+require("file?name=[name].[ext]!./styles/style.css");
+
 // Initialize Firebase
 	var config = {
 		apiKey: "AIzaSyC03jOtrLV6FF2VTSw1h1Igx6EBhT2NToE",

@@ -107,7 +107,7 @@ class TrackData extends React.Component {
     }
 
     getTotalExpenses(rawData) {
-        console.log(rawData);
+
         let categories = rawData.reduce(function(obj, item){
                         obj[item.category] = obj[item.category] || [];
                         obj[item.category].push(item);
@@ -133,15 +133,9 @@ class TrackData extends React.Component {
         // Thanks to http://stackoverflow.com/questions/42306471/iterate-over-array-of-objects-and-change-one-property-in-each-object
         const data = rawData;
 
-        const split = date => date.split('-')[1];
-        const result = data.map(o => {
-            o.date = split(o.date);
-            return o;
-        })
-
-        let allMonths = result.reduce(function(obj, item){
-                        obj[item.date] = obj[item.date] || [];
-                        obj[item.date].push(item);
+        let allMonths = data.reduce(function(obj, item){
+                        obj[item.date.split('-')[1]] = obj[item.date.split('-')[1]] || [];
+                        obj[item.date.split('-')[1]].push(item);
                         return obj;
                     }, {});
 
@@ -156,15 +150,12 @@ class TrackData extends React.Component {
         
         let numberedArray = resultArray.map(item => {
             item.name = parseFloat(item.name, 10);
-            return item
+            return item;
         })
 
         let sortedArray = numberedArray.sort(function(a, b) {
             return a.name - b.name;
         });
-
-        // return state to as it was before formatting date
-        console.log(rawData);
 
         return sortedArray;
     }
