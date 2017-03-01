@@ -25,13 +25,16 @@ class ManageDatasets extends React.Component {
 							<h2>Customize Your Dataset</h2>
 							<Row>
 								<Row s={12}>
+
 									<Input s={10} type="text" label="Create your categories" id="categories" onChange={ (e) => this.setState({ newCategory: e.target.value }) }/>
 									<Button id="addCategory" className="submit dark-primary-color" 
 											onClick={ () => this.submitNewCategory() }>Add</Button>
+
 								</Row>
 								<ul>
 									<li className="current-categories"><strong>Current categories:</strong> 
 										<div className="clearfix">
+
 											{ Object.keys(this.props.expenseCategories).map(key => {
 												let categoryName = this.props.expenseCategories[key];
 												return <Col key={ key }>
@@ -44,6 +47,7 @@ class ManageDatasets extends React.Component {
 																onClick={ (evt) => this.deleteCategory(categoryName, key) } ><Icon>delete</Icon></Button>
 														</Col>
 											}) }
+											
 										</div>
 									</li>
 								</ul>
@@ -63,6 +67,7 @@ class ManageDatasets extends React.Component {
 	    this.setState({ newCategory: '' });
 	}
 
+	// Would love to figure out how to modify a category, but so that it is somehow connected to it's firebase key and then it would update all of the existing entries with the modified category name. We realize this might be a big question, but even a nudge in the right direction would be great!
 	modifyCategory(e, category) {
 		let firebaseRef = firebase.database().ref('dataset/expenseCategories');
 		const newCategory = this.state.newCategory;
@@ -72,7 +77,6 @@ class ManageDatasets extends React.Component {
 	}
 
 	deleteCategory(category, key) {
-
 		let firebaseRef = firebase.database().ref('dataset/expenseCategories');
 		firebaseRef.child(key).remove();
 	}

@@ -56,6 +56,8 @@ class App extends React.Component {
 		browserHistory.push('/login');
 	}
 
+	// Would love to know how to sort the data on load of app...can't figure out where in the lifecycle/how to call the function so the data is more organized initially
+	// Also, this function seems pretty clunky, if you have any suggestions that would be great!
 	sortExpenses(property) {
 		let expensesForDisplay = this.state.dataset.expenses;
 		let sortingProperty = this.state.dataset.sortingProperty;
@@ -101,6 +103,7 @@ class App extends React.Component {
 			this.setState({ dataset: dataset });
 		});
 
+		// If we're looking at a different part of the database, is this what we do? Just make another firebaseRef?
 		let firebaseRef2 = firebase.database().ref('dataset/expenseCategories');
 		firebaseRef2.on('child_added', (snapshot, key) => {
 
