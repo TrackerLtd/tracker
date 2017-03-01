@@ -92,6 +92,7 @@ class TrackData extends React.Component {
         this.setState({ newExpense: newExpense });
     }
 
+    // In order to prevent form fields from being left empty, we're just checking the length of the expense that is being submitted. We would like the inputs to clear on submit, but if we set all keys of the newExpense object to be '', we can't compare the length of it (keys still exist).
     submitNewExpense() {
         if( this.props.expenseAttributes.length === Object.keys(this.state.newExpense).length ) {
             let firebaseRef = firebase.database().ref('dataset/expenses');
@@ -107,14 +108,14 @@ class TrackData extends React.Component {
     }
 
     getTotalExpenses(rawData) {
-
+        // Group together based on Category
         let categories = rawData.reduce(function(obj, item){
                         obj[item.category] = obj[item.category] || [];
                         obj[item.category].push(item);
                         return obj;
                     }, {});
         
-
+        // Map over the keys, add all of the amounts that have the same category
         let resultArray = Object.keys(categories).map((key) => { 
             const expensesForCategory = categories[key];
             const categorySum = expensesForCategory.reduce((total, value) => {
